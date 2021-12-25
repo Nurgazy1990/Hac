@@ -12,42 +12,6 @@ from product.models import Product, Category, Comment
 from product.permissions import IsAdmin, IsAuthor
 from product.serializers import ProductSerializer, ProductsListSerializer, CategorySerializer, CommentSerializer
 
-
-# @api_view(['GET'])
-# def products_list(request):
-#     products = Product.objects.all()
-#     serializer = ProductSerializer(products, many=True)
-#     return Response(serializer.data)
-#
-#
-# class ProductsListView(APIView):
-#     def get(self, request):
-#         products = Product.objects.all()
-#         serializer = ProductSerializer(products, many=True)
-#         return Response(serializer.data)
-
-
-# CRUD (Create, Retrieve, Update, Delete)
-# class ProductsListView(ListAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductsListSerializer
-#
-#
-# class ProductDetailsView(RetrieveAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-#
-#
-# class CreateProductView(CreateAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-#
-#
-# class UpdateProductView(UpdateAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-#
-#
 class DeleteAPIView(DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer

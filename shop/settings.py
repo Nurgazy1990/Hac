@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_yasg',
 
-    'account',
+    'customer',
     'order',
     'product',
 ]
@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'customer.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
