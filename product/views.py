@@ -15,16 +15,6 @@ from product.serializers import ProductSerializer, ProductsListSerializer, Categ
 class DeleteAPIView(DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-#
-#
-# class ProductListCreateView(ListCreateAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-#
-#
-# class ProductRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
 
 
 class ProductViewSet(ModelViewSet):
@@ -46,31 +36,6 @@ class ProductViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     # ?search = apple
-    #     search_param = self.request.query_params.get('search')
-    #     queryset = queryset.filter(name__icontains=search_param)
-    #     return queryset
-
-
-    # def get_permissions(self):
-    #     if self.action == 'comment':
-    #         return []
-    #     return [IsAdmin()]
-    #
-    # #api/v1/products/1/comment
-    # @action(['POST'], detail=True)
-    # def comment(self, request, pk):
-    #     product = self.get_object()
-    #     text = request.data.get('text')
-    #     rating = request.data.get('rating')
-    #     data = {'product': product.id, 'text': text, 'rating': rating}
-    #     serializer = CommentSerializer(data=data, context={'request': request})
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-    #     return Response('Комментарий успешно создан', status=201)
-
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
@@ -78,22 +43,6 @@ class CategoryViewSet(ModelViewSet):
     permission_classes = [IsAdmin]
 
 
-# class CreateCommentView(CreateAPIView):
-#     queryset = Comment.objects.all()
-#     serializer_class = CommentSerializer
-#     permission_classes = [IsAuthenticated]
-#
-#
-# class UpdateCommentView(UpdateAPIView):
-#     queryset = Comment.objects.all()
-#     serializer_class = CommentSerializer
-#     permission_classes = [IsAuthor]
-#
-#
-# class DeleteCommentView(DestroyAPIView):
-#     queryset = Comment.objects.all()
-#     serializer_class = CommentSerializer
-#     permission_classes = [IsAuthor | IsAdmin]
 
 
 class CommentViewSet(CreateModelMixin,
@@ -109,9 +58,3 @@ class CommentViewSet(CreateModelMixin,
         return [IsAuthor()]
 
 
-# TODO: пройтись по всем запросам
-# TODO: Комментарии к продуктам
-# TODO: Заказы
-# TODO: Тесты
-# TODO: git
-# TODO: документация

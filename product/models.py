@@ -48,7 +48,3 @@ class Comment(models.Model):
         ]
     )
     created_at = models.DateTimeField(auto_now_add=True)
-
-# product = Product.objects.get(id=10)
-# Comment.objects.filter(product=product)
-# product.comments.all()

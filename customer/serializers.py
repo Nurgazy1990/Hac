@@ -113,26 +113,6 @@ class ChangePasswordSerializer(serializers.Serializer):
         user.save()
 
 
-# class ForgotPasswordSerializer(serializers.Serializer):
-#     email = serializers.EmailField(required=True)
-#
-#     def validate_email(self, email):
-#         if not User.objects.filter(email=email).exists():
-#             raise serializers.ValidationError('Пользователь не зарегистрирован')
-#         return email
-#
-#     def send_new_pass(self):
-#         email = self.validated_data.get('email')
-#         user = User.objects.get(email=email)
-#         random_pass = get_random_string(15)
-#         user.set_password(random_pass)
-#         user.save()
-#         send_mail('Восстановление пароля',
-#                   f'Ваш новый пароль: {random_pass}',
-#                   'test@gmail.com',
-#                   [email])
-
-
 class ForgotPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
 

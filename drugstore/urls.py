@@ -24,9 +24,9 @@ from order.views import CreateOrderView, UsersOrdersList, UpdateOrderStatusView
 
 schema_view = get_schema_view(
     openapi.Info(
-        title='Python 15 Shop',
+        title='Drugstore',
         default_version='v1',
-        description='Интернет магазин'
+        description='Онлайн аптека'
     ),
     public=True
 )
