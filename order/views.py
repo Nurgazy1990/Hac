@@ -36,3 +36,5 @@ class UpdateOrderStatusView(APIView):
         order.save()
         serializer = OrderSerializer(order)
         return Response(serializer.data)
+
+

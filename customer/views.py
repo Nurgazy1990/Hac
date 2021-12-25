@@ -15,8 +15,8 @@ class RegistrationView(APIView):
         serializer = RegisterSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.create()
-            message = f'Вы успешно зарегистрированы. ' \
-                      f'Вам отправлено письмо с активацией'
+            message = f'Вы успешно зарегистрированы, на указанный ' \
+                      f'вами электронный ящик было отправлено письмо с кодом активации'
             return Response(message, status=201)
 
 
@@ -26,7 +26,7 @@ class ActivationView(APIView):
         serializer = ActivationSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.activate()
-            return Response('Ваш аккаунт успешно активирован')
+            return Response('Вы успешно активировали Ваш аккаунт')
 
 
 class LoginView(ObtainAuthToken):
@@ -39,7 +39,7 @@ class LogoutView(APIView):
     def post(self, request):
         user = request.user
         Token.objects.filter(user=user).delete()
-        return Response('Вы успешно разлогинились')
+        return Response('Вы успешно покинули свою учетную запись')
 
 
 class ChangePasswordView(APIView):
@@ -51,7 +51,7 @@ class ChangePasswordView(APIView):
                                               context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.set_new_pass()
-        return Response('Пароль успешно обновлён')
+        return Response('Вы успешно обновили свой пароль')
 
 
 class ForgotPasswordView(APIView):
@@ -60,7 +60,7 @@ class ForgotPasswordView(APIView):
         serializer = ForgotPasswordSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.send_code()
-        return Response('Вам отправлено письмо для восстановления пароля')
+        return Response('На вашу почту отправлено письмо для восстановления пароля')
 
 
 class ForgotPasswordComplete(APIView):
@@ -69,4 +69,4 @@ class ForgotPasswordComplete(APIView):
         serializer = ForgotPasswordCompleteSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.set_new_pass()
-        return Response('Пароль успешно обновлён')
+        return Response('Вы успешно обновили свой пароль')

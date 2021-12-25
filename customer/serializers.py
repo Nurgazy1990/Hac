@@ -15,14 +15,14 @@ class RegisterSerializer(serializers.Serializer):
 
     def validate_email(self, email):
         if User.objects.filter(email=email).exists():
-            raise serializers.ValidationError('Адрес почты уже занят')
+            raise serializers.ValidationError('Адрес электронной почты уже существует')
         return email
 
     def validate(self, attrs):
         password = attrs.get('password')
         password_confirmation = attrs.pop('password_confirmation')
         if password != password_confirmation:
-            raise serializers.ValidationError('Пароли не совпадают')
+            raise serializers.ValidationError('Введенные пароли не совпадают')
         return attrs
 
     def create(self):
@@ -118,7 +118,7 @@ class ForgotPasswordSerializer(serializers.Serializer):
 
     def validate_email(self, email):
         if not User.objects.filter(email=email).exists():
-            raise serializers.ValidationError('Пользователь не зарегистрирован')
+            raise serializers.ValidationError('Пользователь не найден')
         return email
 
     def send_code(self):
