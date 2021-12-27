@@ -6,12 +6,14 @@ from rest_framework.generics import CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from product.filters import ProductFilter
-from product.models import Product, Category, Comment
+from product.models import Product, Category, Comment, Like
 from product.permissions import IsAdmin, IsAuthor
-from product.serializers import ProductSerializer, ProductsListSerializer, CategorySerializer, CommentSerializer
+from product.serializers import ProductSerializer, ProductsListSerializer, CategorySerializer, CommentSerializer, \
+    LikeSerializer
 
 
 class ProductViewSet(ModelViewSet):
@@ -63,3 +65,13 @@ class CommentViewSet(CreateModelMixin,
         return [IsAuthor()]
 
 
+class LikeView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        # user = request.user
+        # like_item = Like.objects.filter(user=user)
+        data = request.data
+        serializer = LikeSerializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            message = f'Вы поставили лайк'
+            return Response(message, status=201)
