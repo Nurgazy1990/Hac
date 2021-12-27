@@ -4,8 +4,39 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from order.models import Order
-from order.serializers import OrderSerializer
+from order.models import Order, CartItem
+from order.serializers import OrderSerializer, CartItemSerializer
+
+
+class CartItemView(CreateAPIView):
+    serializer_class = CartItemSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class UsersCartItemsList(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        # orders = Order.objects.filter(user=user)
+        cartItems = CartItem.objects.filter(owner=user)
+        serializer = CartItemSerializer(cartItems, many=True)
+        return Response(serializer.data)
+
+
+class UpdateCartItemStatusView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def patch(self, request, pk):
+        status = request.data['status']
+        if status not in ['in_process', 'closed']:
+            return Response('Неверный статус', status=400)
+        cartItem = CartItem.objects.get(pk=pk)
+        cartItem.status = status
+        cartItem.save()
+        serializer = CartItemSerializer(cartItem)
+        return Response(serializer.data)
+
 
 
 class CreateOrderView(CreateAPIView):

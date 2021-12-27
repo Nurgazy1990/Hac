@@ -5,6 +5,10 @@ from product.models import Product
 
 User = get_user_model()
 
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, related_name="cart_product", on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name="user_cart", on_delete=models.CASCADE)
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey('Order',
@@ -32,3 +36,5 @@ class Order(models.Model):
                               choices=STATUS_CHOICES)
 
 
+    def __str__(self):
+        return self.user.name + " - " + str(self.created_at)

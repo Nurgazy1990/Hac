@@ -37,9 +37,7 @@ urlpatterns = [
     path('api/v1/docs/', schema_view.with_ui('swagger')),
     path('api/v1/', include('customer.urls')),
     path('api/v1/', include('product.urls')),
-    path('api/v1/orders/', CreateOrderView.as_view()),
-    path('api/v1/orders/own/', UsersOrdersList.as_view()),
-    path('api/v1/orders/<int:pk>/', UpdateOrderStatusView.as_view())
+    path('api/v1/', include('order.urls')),
 ]
 
 if settings.DEBUG:
