@@ -51,3 +51,13 @@ class Comment(models.Model):
         ]
     )
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User,
+                             related_name='likes',
+                             on_delete=models.CASCADE)
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    like_count = models.PositiveIntegerField()

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from product.models import Product, Category, Comment
+from product.models import Product, Category, Comment, Like
 
 
 class ProductsListSerializer(serializers.ModelSerializer):
@@ -35,3 +35,12 @@ class CommentSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         validated_data['author'] = user
         return super().create(validated_data)
+
+
+class LikeSerializer(serializers.Serializer):
+
+    def validate_product_id(self, product_id):
+        if Like.objects.filter(pk=product_id).exists():
+            Like.like_count += 1
+            Like.save()
+        return Like.like_count
