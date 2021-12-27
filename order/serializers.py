@@ -1,12 +1,22 @@
 from rest_framework import serializers
 
-from order.models import OrderItem, Order
+from order.models import OrderItem, Order, CartItem
+
+class CartItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartItem
+        fields = ['product', 'owner']
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
+    def get_user(self, instance):
+        return instance.order.user.pk
+
     class Meta:
         model = OrderItem
-        fields = ['product', 'quantity']
+        fields = ['product', 'quantity', 'user']
 
 
 class OrderSerializer(serializers.ModelSerializer):

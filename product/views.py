@@ -1,3 +1,4 @@
+import rest_framework
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -12,10 +13,6 @@ from product.models import Product, Category, Comment
 from product.permissions import IsAdmin, IsAuthor
 from product.serializers import ProductSerializer, ProductsListSerializer, CategorySerializer, CommentSerializer
 
-class DeleteAPIView(DestroyAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
@@ -26,6 +23,14 @@ class ProductViewSet(ModelViewSet):
     filterset_class = ProductFilter
     search_fields = ['name']
     ordering_fields = ['name', 'price']
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.view_count+=1
+        instance.save()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
 
     # api/v1/products/id/comments/
     @action(['GET'], detail=True)

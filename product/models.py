@@ -25,6 +25,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products',
                               null=True,
                               blank=True)
+    view_count = models.IntegerField(default=1, blank=True, null=True)
 
     class Meta:
         ordering = ['name']
@@ -33,6 +34,7 @@ class Product(models.Model):
         return self.name
 
 
+# Отзыв (Feedback)
 class Comment(models.Model):
     product = models.ForeignKey(Product,
                                 on_delete=models.CASCADE,
@@ -41,6 +43,7 @@ class Comment(models.Model):
                                on_delete=models.CASCADE,
                                related_name='comments')
     text = models.TextField()
+
     rating = models.SmallIntegerField(
         validators=[
             MinValueValidator(1),

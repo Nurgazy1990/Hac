@@ -4,5 +4,9 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("pk", "email", "name")
 
-admin.site.register(User)
+
+
+admin.site.register(User, UserAdmin)
