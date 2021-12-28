@@ -32,6 +32,7 @@ class UpdateCartItemStatusView(APIView):
         if status not in ['in_process', 'closed']:
             return Response('Неверный статус', status=400)
         cartItem = CartItem.objects.get(pk=pk)
+        print('Privet1')
         cartItem.status = status
         cartItem.save()
         serializer = CartItemSerializer(cartItem)

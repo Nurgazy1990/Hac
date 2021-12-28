@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import UserManager
 from django.db import models
 
 from product.models import Product
@@ -8,6 +9,7 @@ User = get_user_model()
 class CartItem(models.Model):
     product = models.ForeignKey(Product, related_name="cart_product", on_delete=models.CASCADE)
     owner = models.ForeignKey(User, related_name="user_cart", on_delete=models.CASCADE)
+    objects = UserManager()
 
 
 class OrderItem(models.Model):

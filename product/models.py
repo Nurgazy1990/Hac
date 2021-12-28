@@ -61,3 +61,8 @@ class Like(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     like_count = models.PositiveIntegerField()
+
+class LikeModel(models.Model):
+    product = models.ForeignKey(Product, related_name="like_product", on_delete=models.CASCADE)
+    like_status = models.BooleanField(default=False)
+    owner = models.ForeignKey(User, related_name="user_like", on_delete=models.CASCADE)

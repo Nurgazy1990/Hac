@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from product.models import Product, Category, Comment, Like
+from product.models import Product, Category, Comment, Like, LikeModel
 
 
 class ProductsListSerializer(serializers.ModelSerializer):
@@ -37,6 +37,7 @@ class CommentSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
+
 class LikeSerializer(serializers.Serializer):
 
     def validate_product_id(self, product_id):
@@ -44,3 +45,8 @@ class LikeSerializer(serializers.Serializer):
             Like.like_count += 1
             Like.save()
         return Like.like_count
+
+class LikeItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LikeModel
+        fields = ['product', 'like_status']
